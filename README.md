@@ -266,6 +266,7 @@ If you want to use the Demos section, place both files in the same folder:
 my-resume/
 ├── index.html      ← the résumé (this file)
 └── demos.html      ← your demos page (you provide this)
+└── headshot.png    ← your professional photo (optional)
 ```
 
 No other files are needed. All dependencies (React, Babel, js-yaml) are loaded from CDNs at runtime.
