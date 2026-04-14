@@ -201,6 +201,40 @@ To add a new style, append a new `{ grad, size }` object to the array. The palet
 
 ---
 
+## Editing demos.html
+
+Open `demos.html` in any text editor and find the `demoData` array near the bottom of the file, inside the `<script>` block. Each object in the array renders as one card on the page.
+
+```js
+const demoData = [
+    {
+        name: "My Project",
+        category: "Automation",
+        description: "A short description of what this project does and why it exists.",
+        stack: ["Python", "AWS Lambda"],
+        link: "https://github.com/you/my-project"
+    }
+];
+```
+
+| Field         | Description                                                                                  |
+| ------------- | -------------------------------------------------------------------------------------------- |
+| `name`        | Title displayed on the card                                                                  |
+| `category`    | Short label shown above the title in accent color (e.g. `"DevOps"`, `"Automation"`)         |
+| `description` | One or two sentences describing the project                                                  |
+| `stack`       | Array of technology badges shown at the bottom of the card                                   |
+| `link`        | URL the entire card links to when clicked (opens in a new tab). Use `""` for no link.       |
+
+**Adding a demo:** append a new object to the `demoData` array following the format above.
+
+**Removing a demo:** delete the corresponding object from the array.
+
+**Reordering demos:** move the objects within the array — cards render in list order.
+
+**Disabling a link:** set `link: ""` to make the card non-clickable without removing it.
+
+---
+
 ## File Structure
 
 If you want to use the Demos ribbon, place both files in the same folder:
