@@ -131,7 +131,18 @@ Controls whether the **Demos!** bookmark ribbon appears in the top-right corner 
 
 ---
 
-### 4. `default_theme` — Default Color Scheme
+### 4. `headshot` — Professional Headshot
+
+```yaml
+headshot: true    # show professional headshot 
+headshot: false   # hide professional headshot
+```
+
+Displays a professional headshot in the upper left corner. Requires `headshot.png` or `headshot.jpg` in the same folder as `index.html`.
+
+---
+
+### 5. `default_theme` — Default Color Scheme
 
 ```yaml
 default_theme: light  # start in light mode (default if omitted)
@@ -146,7 +157,7 @@ Visitors can always toggle between light and dark using the button in the top-ri
 
 ---
 
-### 5. `project_categories` — Filter Button Order *(optional)*
+### 6. `project_categories` — Filter Button Order *(optional)*
 
 ```yaml
 project_categories:
@@ -162,7 +173,7 @@ Either way, you never need to update this list when adding a new category — ju
 
 ---
 
-### 6. `projects` — Featured Project Cards
+### 7. `projects` — Featured Project Cards
 
 ```yaml
 projects:
