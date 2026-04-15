@@ -205,6 +205,9 @@ body.dark{--bg:#0d0d0f;--surface:#131316;--card:#18181d;--card2:#1e1e25;--border
 .m-cat{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);margin-bottom:10px}
 .m-title{font-size:1.1rem;font-weight:600;margin-bottom:16px;line-height:1.35}
 .m-desc{font-size:.86rem;font-weight:300;color:var(--t2);line-height:1.8}
+.m-link{display:inline-flex;align-items:center;gap:6px;margin-top:18px;padding:7px 16px;border-radius:2px;border:1px solid rgba(201,168,76,.3);background:var(--gold-dim);color:var(--gold);font-size:.74rem;font-weight:600;text-decoration:none;text-transform:uppercase;letter-spacing:.1em;transition:all .2s}
+.m-link:hover{background:var(--gold);color:#0d0d0f;border-color:var(--gold)}
+.m-link:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .m-close{position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--t3);font-size:.8rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .m-close:hover{border-color:var(--red);color:var(--red)}
 .m-close:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
@@ -320,6 +323,7 @@ body.dark{--bg:#0d0d0f;--surface:#131316;--card:#18181d;--card2:#1e1e25;--border
     <div class="m-cat" id="m-cat"></div>
     <div class="m-title" id="m-title"></div>
     <p class="m-desc" id="m-desc"></p>
+    <div id="m-link-wrap"></div>
   </div>
 </div>
 
@@ -379,6 +383,7 @@ projects:
     - title: "AI Helpdesk Automation"
       cat: "AI & Automation"
       desc: "Built an AI-powered helpdesk automation layer that handles tier-1 ticket classification, routing, and first-response drafting using LLM integrations, cutting mean time-to-first-response and freeing the IT team for higher-complexity work."
+      url: "https://github.com/cdevoley/helpdesk-triage-agent"
     - title: "Production MCP Servers & Slack Bots"
       cat: "AI & Automation"
       desc: "Developed and shipped production-grade MCP (Model Context Protocol) servers and Slack bots that give IT and engineering teams conversational access to internal tooling — enabling actions like device lookups, access requests, and ticket creation directly from Slack."
@@ -812,6 +817,19 @@ function openModal(p) {
   document.getElementById('m-cat').textContent   = String(p.cat   ?? '');
   document.getElementById('m-title').textContent = String(p.title ?? '');
   document.getElementById('m-desc').textContent  = String(p.desc  ?? '');
+
+  const linkWrap = document.getElementById('m-link-wrap');
+  linkWrap.replaceChildren();
+  const url = safeUrl(p.url ?? '');
+  if (url) {
+    const link = document.createElement('a');
+    link.href = url;
+    link.className = 'm-link';
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = 'View Project →';
+    linkWrap.appendChild(link);
+  }
 
   const modal = document.getElementById('modal');
   _modalTrigger = document.activeElement; // remember where focus came from
