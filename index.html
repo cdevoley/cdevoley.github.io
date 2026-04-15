@@ -37,7 +37,15 @@
        NOTE: The button links to demos.html. That file must exist in the same
        folder as index.html for the link to work.
 
-    4. experience
+    4. show_headshot
+       Controls whether the headshot circle appears in the sidebar.
+         show_headshot: true   — circle is visible (default)
+         show_headshot: false  — circle is hidden
+       NOTE: Requires "headshot.jpg" or "headshot.png" in the same folder as
+       index.html. If show_headshot is true but no file is found, the circle
+       will display a prompt to add the file.
+
+    5. experience
        A list of jobs shown in the carousel. Each entry has:
          id          - unique key that links to the projects section (e.g. "job0")
                        Keep this stable — changing it breaks the project link.
@@ -275,6 +283,9 @@ default_theme: light
 # Set to false to hide the "View Demos" button in the sidebar (requires demos.html)
 show_demos: true
 
+# Set to false to hide the headshot circle (requires "headshot.jpg" or "headshot.png" in the same folder as index.html)
+show_headshot: true
+
 experience:
   - id: "job0"
     title: "Staff DevOps Engineer"
@@ -482,10 +493,10 @@ projects:
         linkedin:    c.linkedin    || '',
         github:      c.github      || '',
         blog:        c.blog        || '',
-        headshot:    c.headshot    !== false,
       },
-      defaultTheme: parsed.default_theme === 'dark' ? 'dark' : 'light',
-      showDemos:  parsed.show_demos !== false,
+      defaultTheme:  parsed.default_theme  === 'dark' ? 'dark' : 'light',
+      showDemos:     parsed.show_demos     !== false,
+      showHeadshot:  parsed.show_headshot  !== false,
       experience: parsed.experience || [],
       projects:   parsed.projects   || {},
     };
@@ -526,14 +537,25 @@ const iBlog = `<svg width="12" height="12" fill="none" viewBox="0 0 24 24" strok
 function buildSidebar(){
   const c = D.candidate;
   const avatarEl = document.getElementById('sb-avatar');
-  if (c.headshot) {
+  if (D.showHeadshot) {
     const exts = ['jpg', 'jpeg', 'png', 'webp'];
-    let found = false;
+    let found = false, failed = 0;
     exts.forEach(ext => {
       if (found) return;
       const img = new Image();
       img.onload = () => {
         if (!found) { found = true; avatarEl.innerHTML = ''; avatarEl.appendChild(img); }
+      };
+      img.onerror = () => {
+        failed++;
+        if (!found && failed === exts.length) {
+          avatarEl.style.display = 'flex';
+          avatarEl.style.alignItems = 'center';
+          avatarEl.style.justifyContent = 'center';
+          avatarEl.style.textAlign = 'center';
+          avatarEl.style.padding = '12px';
+          avatarEl.innerHTML = '<span style="font-size:.65rem;line-height:1.4;color:var(--t3)">Add <code>headshot.jpg</code> or <code>headshot.png</code> to this folder</span>';
+        }
       };
       img.src = `headshot.${ext}`;
       img.alt = c.name;
