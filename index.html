@@ -758,14 +758,15 @@ function renderProjectCards(container, projects, filterCat) {
     card.appendChild(arrow);
     card.appendChild(body);
 
-    const toggle_handler = () => {
+    const toggle_handler = (e) => {
+      e.stopPropagation();
       const isExpanded = card.classList.toggle('expanded');
       card.setAttribute('aria-expanded', String(isExpanded));
     };
 
     card.addEventListener('click', toggle_handler);
     card.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle_handler(); }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle_handler(e); }
     });
 
     container.appendChild(card);
