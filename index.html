@@ -320,12 +320,6 @@ experience:
     period: "Jul 2018 – Aug 2019"
     description: "Sole IT engineer responsible for all infrastructure, support, and network administration at a digital marketing firm, managing Hyper-V, Cisco Meraki, and the full hardware lifecycle."
 
-  - id: "job4"
-    title: "Personal Projects"
-    company: "Independent"
-    period: "2024 – Present"
-    description: "Side projects built in my own time — currently shipping a relocation decision app and a baby food tracking app."
-
 # Projects are keyed by experience id ("job0", "job1", …)
 projects:
   job4:
@@ -781,10 +775,15 @@ function renderProjectCards(container, projects, filterCat) {
 }
 
 function renderProjects() {
-  const allProjects = D.experience.flatMap(exp => {
+  const experienceProjects = D.experience.flatMap(exp => {
     const jobId = String(exp.id ?? '');
     return Array.isArray(D.projects[jobId]) ? D.projects[jobId] : [];
   });
+  const experienceIds = new Set(D.experience.map(exp => String(exp.id ?? '')));
+  const extraProjects = Object.entries(D.projects)
+    .filter(([k]) => !experienceIds.has(k))
+    .flatMap(([, v]) => Array.isArray(v) ? v : []);
+  const allProjects = [...extraProjects, ...experienceProjects];
   activeFilt = 'All';
 
   const cats = ['All', ...new Set(allProjects.map(p => String(p.cat ?? '')).filter(Boolean))];
